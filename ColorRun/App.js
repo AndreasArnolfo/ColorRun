@@ -1,10 +1,10 @@
 import React from 'react';
-import Home from './Component/Home'
+import Navigation from './Navigation/Navigation'
 
 export default class App extends React.Component {
     render() {
         return (
-           <Home/>
+           <Navigation/>
         );
     }
 }

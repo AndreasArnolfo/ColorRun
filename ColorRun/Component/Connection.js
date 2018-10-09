@@ -1,13 +1,16 @@
 import React from 'react'
 import { TouchableOpacity, TextInput, StyleSheet, Text, ImageBackground, Linking} from 'react-native'
 
+
 class Connection extends React.Component {
+
+
     render() {
         return (
             <ImageBackground  source={require('../assets/images/Connexion.png')} style={styles.main_container}>
             <TextInput style={styles.textInputName} placeholder={"Nom d'utilisateur"}/>
             <TextInput style={styles.textInputMdp} placeholder={"Mot de passe"} secureTextEntry={true}/>
-                <TouchableOpacity style={styles.buttonStart} onPress={() => {}}>
+                <TouchableOpacity style={styles.buttonStart} onPress={() => {this.props.navigation.navigate("Home")}}>
                     <Text style={styles.Text}>A l'aventure !</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.buttonFacebook} onPress={() => {}}>

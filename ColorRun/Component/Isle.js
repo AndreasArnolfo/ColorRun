@@ -1,20 +1,20 @@
 import React from 'react'
-import {Animated, Image, Easing} from 'react-native';
+import {Animated, Image } from 'react-native';
+
 
 class Isle extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fadeAnim: new Animated.Value(0), // init opacity 0
+            fadeAnim: new Animated.Value(0),
         };
     }
 
     componentDidMount() {
         Animated.timing(
-            // Uses easing functions
-            this.state.fadeAnim, // The value to drive
-            {toValue: 1} // Configuration
-        ).start(); // Don't forget start!
+            this.state.fadeAnim,
+            {toValue: 1}
+        ).start();
     }
 
     render() {

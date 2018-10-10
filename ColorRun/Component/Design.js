@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet, ImageBackground, View, Image } from 'reac
 import Isle from "./Isle";
 
 
+
 class Design extends React.Component {
 
     render() {

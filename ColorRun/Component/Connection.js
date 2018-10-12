@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, TextInput, StyleSheet, Text, ImageBackground, Linking, Script, style} from 'react-native';
+import { TouchableOpacity, TextInput, StyleSheet, Text, ImageBackground, Linking, Script, style, AsyncStorage} from 'react-native';
 import * as firebase from 'firebase';
 
 
@@ -9,18 +9,17 @@ const firebaseConfig = {
     databaseURL: "https://colorrun-37668.firebaseio.com",
     projectId: "colorrun-37668",
     storageBucket: "colorrun-37668.appspot.com",
-    messagingSenderId: "915473821110"
 };
 
 
 firebase.initializeApp(firebaseConfig);
 
-import { Container, Content, Header, Form, Input, Button, Label, Item } from 'native-base';
+import { Container, Form, Input, Label, Item } from 'native-base';
 
 class Connection extends React.Component {
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = ({
             email: '',
             password: ''
@@ -31,31 +30,30 @@ class Connection extends React.Component {
 
     loginUser = (email, password) =>{
         try{
-            if(this.state.password.length<6)
-            {
-                alert("entre un mot de passe de 6 caracteres enculer")
-                return;
-            }
-            firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
+            firebase.auth().signInWithEmailAndPassword(email.trim(), password).then(function(){
+                this.props.navigation.navigate('Home')
+            });
+
+
         }
         catch(error){
             console.log(error.toString())
         }
-    }
+    };
 
     signUpUser = (email, password) =>{
         try{
             if(this.state.password.length<6)
             {
-                alert("entre un mot de passe de 6 caracteres enculer")
+                alert("entre un mot de passe de 6 caracteres");
                 return;
             }
-            firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
+            firebase.auth().createUserWithEmailAndPassword(email, password)
         }
         catch(error){
             console.log(error.toString())
         }
-    }
+    };
 
 
 
@@ -65,7 +63,7 @@ class Connection extends React.Component {
             
                 <Container style={styles.form_input}>
                     <Form>
-                        <Item style={ styles.textInputName}>
+                        <Item floatingLabel style={ styles.textInputName}>
                             <Label>Email :</Label>
                             <Input
                                 autoCorrect={false}
@@ -74,7 +72,7 @@ class Connection extends React.Component {
                             />
                         </Item>
 
-                        <Item style={styles.textInputMdp}>
+                        <Item floatingLabel style={styles.textInputMdp}>
                             <Label>Password :</Label>
                             <Input
                                 secureTextEntry={true}
@@ -83,14 +81,16 @@ class Connection extends React.Component {
                                 onChangeText={( password ) => this.setState ({ password })}
                             />
                         </Item>
-
                     </Form>
-                    <TouchableOpacity style={styles.buttonStart} onPress={() => {this.loginUser(this.state.email, this.state.password)}}>
+
+                    <TouchableOpacity style={styles.buttonStart} onPress={() => {this.loginUser(this.state.email, this.state.password,this.props.navigation.navigate("Home"))}}>
                         <Text style={styles.Text}>A l'aventure !</Text>
                     </TouchableOpacity>
+
                     <TouchableOpacity style={styles.buttonRegister} onPress={() => {this.signUpUser(this.state.email, this.state.password)}}>
                         <Text style={styles.Text}>Register</Text>
                     </TouchableOpacity>
+
                     <TouchableOpacity style={styles.buttonFacebook} onPress={() => {}}>
                         <Text style={styles.Text}>Connexion facebook</Text>
                     </TouchableOpacity>
@@ -99,12 +99,8 @@ class Connection extends React.Component {
                       onPress={() => Linking.openURL('https://play.google.com/about/play-terms.html')}>
                     Conditions d'utilisations
                     </Text>
+
                 </Container>
-
-
-
-                
-                
             </ImageBackground>
         )
 
@@ -114,32 +110,31 @@ class Connection extends React.Component {
 const styles = StyleSheet.create(
     {
         form_input: {
-            width: 0,
-            height: 20,
+            backgroundColor: 'rgba(0,0,0,0)',
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: 200,
+            marginTop: 100,
         },
 
         textInputName: {
             width: 280,
-            height: 40,
-            backgroundColor: '#FFFFFF',
+            height: 50,
             justifyContent: 'center',
             alignItems: 'center',
             flexWrap: 'wrap',
-            marginTop: 90,
+            backgroundColor: '#FFFF',
+            marginTop: 10,
             borderRadius: 10,
         },
 
         textInputMdp: {
             width: 280,
-            height: 40,
-            backgroundColor: '#FFFFFF',
+            height: 50,
             justifyContent: 'center',
             alignItems: 'center',
             flexWrap: 'wrap',
+            backgroundColor: '#FFFF',
             marginTop: 10,
             borderRadius: 10,
         },
@@ -177,7 +172,7 @@ const styles = StyleSheet.create(
             backgroundColor: '#1FA14F',
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: -350,
+            marginTop: 50,
             borderRadius: 5,
         },
 

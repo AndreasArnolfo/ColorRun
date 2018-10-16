@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Image, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native'
 import LoadingPage from "./LoadingPage";
 import Isle from "./Isle";
 
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
 
         }
     }
-)
+);
 
 export default Home
